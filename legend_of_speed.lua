@@ -1,31 +1,49 @@
-local GuiService = game:GetService("GuiService")
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+-- close ui
+function closeui()
+    local ScreenGui = Instance.new("ScreenGui")
+    local ImageButton = Instance.new("ImageButton")
+    local UICorner = Instance.new("UICorner")
+    ScreenGui.Parent = game.CoreGui
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    ImageButton.Parent = ScreenGui
+    ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    ImageButton.BorderSizePixel = 0
+    ImageButton.Position = UDim2.new(0.019233337, 0, 0.1502590813, 0)
+    ImageButton.Size = UDim2.new(0, 39, 0, 39)
+    ImageButton.Draggable = true
+    ImageButton.Image = "http://www.roblox.com/asset/?id=79051406542947"
+    ImageButton.MouseButton1Down:connect(function()
+        game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.End,false,game)
+    end)
+end
 -- xác định người chơi
 if _G.ModDevice == "Phone" then
     Fluent:Notify({
         Title = "ZinSY Hub - Notification",
         Content = "Chế Độ Điện Thoại",
         SubContent = "Bấm Vào Nút Bên Tay Trái Để Đóng Giao Diện",
-        Duration = 12
-        
+        Duration = 16 
     })
-    _G.SizeDevice = UDim2.fromOffset(424, 288)
+    _G.SizeDevice = UDim2.fromOffset(470, 288)
+    closeui()
 elseif _G.ModDevice == "Tablet" then
     Fluent:Notify({
         Title = "ZinSY Hub - Notification",
         Content = "Chế Độ Máy Tính Bảng",
         SubContent = "Bấm Vào Nút Bên Tay Trái Để Đóng Giao Diện",
-        Duration = 12
+        Duration = 16
     })
     _G.SizeDevice = UDim2.fromOffset(535, 444)
+    closeui()
 else
     Fluent:Notify({
         Title = "ZinSY Hub - Notification",
         Content = "Chế Độ Máy Tính",
         SubContent = "Bấm Vào Nút Control Bên Phải Để Đóng Giao Diện",
-        Duration = 12
+        Duration = 16
     })
     _G.SizeDevice = UDim2.fromOffset(612, 512)
 end
@@ -37,7 +55,7 @@ local Window = Fluent:CreateWindow({
     Size = _G.SizeDevice,
     Acrylic = true,
     Theme = "Darker",
-    MinimizeKey = Enum.KeyCode.RightControl
+    MinimizeKey = Enum.KeyCode.End,
 })
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "home" }),
