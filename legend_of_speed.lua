@@ -11,7 +11,7 @@ function closeui()
     ImageButton.Parent = ScreenGui
     ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton.BorderSizePixel = 0
-    ImageButton.Position = UDim2.new(0.018433337, 0, 0.1700590813, 0)
+    ImageButton.Position = UDim2.new(0.012433337, 0, 0.1780590813, 0)
     ImageButton.Size = UDim2.new(0, 34, 0, 34)
     ImageButton.Draggable = true
     ImageButton.Image = "http://www.roblox.com/asset/?id=79051406542947"
