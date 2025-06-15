@@ -11,8 +11,8 @@ function closeui()
     ImageButton.Parent = ScreenGui
     ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton.BorderSizePixel = 0
-    ImageButton.Position = UDim2.new(0.019233337, 0, 0.1502590813, 0)
-    ImageButton.Size = UDim2.new(0, 39, 0, 39)
+    ImageButton.Position = UDim2.new(0.019633337, 0, 0.1502590813, 0)
+    ImageButton.Size = UDim2.new(0, 34, 0, 39)
     ImageButton.Draggable = true
     ImageButton.Image = "http://www.roblox.com/asset/?id=79051406542947"
     ImageButton.MouseButton1Down:connect(function()
@@ -27,7 +27,7 @@ if _G.ModDevice == "Phone" then
         SubContent = "Bấm Vào Nút Bên Tay Trái Để Đóng Giao Diện",
         Duration = 16 
     })
-    _G.SizeDevice = UDim2.fromOffset(510, 408)
+    _G.SizeDevice = UDim2.fromOffset(510, 365)
     closeui()
 elseif _G.ModDevice == "Tablet" then
     Fluent:Notify({
@@ -46,6 +46,7 @@ else
         Duration = 16
     })
     _G.SizeDevice = UDim2.fromOffset(712, 512)
+    closeui()
 end
 -- create tab window
 local Window = Fluent:CreateWindow({
@@ -176,14 +177,13 @@ function buypet(name)
 end
 local PetDropdown = PetsTab:AddDropdown("PetDropdown", {
     Title = "Dropdown Pet",
-    Values = {"Red Crystal", "Blue Crystal", "Purple Crystal", "Yellow Crystal", "Lightning Crystal"},
+    Values = {"Red Crystal", "Blue Crystal", "Purple Crystal", "Yellow Crystal", "Lightning Crystal","Snow Crystal"},
     Multi = false,
     Default = 1,
 })
 PetDropdown:SetValue("here")
 PetDropdown:OnChanged(function(Value)
     _G.PetDropdown = Value
-    print(_G.PetDropdown)
 end)
 PetsTab:AddButton({
     Title = "Open Pet",
