@@ -170,9 +170,28 @@ task.spawn(function()
     end
 end)
 -- PetsTab
-
-
-
+local PetsTab = Tabs.Main:AddSection("Pets Tab")
+function buypet(name)
+    game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",name)
+end
+local PetDropdown = PetsTab:AddDropdown("PetDropdown", {
+    Title = "Dropdown Pet",
+    Values = {"Red Crystal", "Blue Crystal", "Purple Crystal", "Yellow Crystal", "Lightning Crystal"},
+    Multi = false,
+    Default = 1,
+})
+PetDropdown:SetValue("here")
+PetDropdown:OnChanged(function(Value)
+    _G.PetDropdown = Value
+    print(_G.PetDropdown)
+end)
+PetsTab:AddButton({
+    Title = "Open Pet",
+    Description = "Mua Pet Chọn Ở Dropdown",
+    Callback = function()
+        buypet(_G.PetDropdown)
+    end
+})
 -- servertab
 local ServerTab = Tabs.Settings:AddSection("Server")
 ServerTab:AddButton({
