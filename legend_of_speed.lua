@@ -27,7 +27,7 @@ if _G.ModDevice == "Phone" then
         SubContent = "Bấm Vào Nút Bên Tay Trái Để Đóng Giao Diện",
         Duration = 16 
     })
-    _G.SizeDevice = UDim2.fromOffset(470, 288)
+    _G.SizeDevice = UDim2.fromOffset(510, 408)
     closeui()
 elseif _G.ModDevice == "Tablet" then
     Fluent:Notify({
@@ -36,7 +36,7 @@ elseif _G.ModDevice == "Tablet" then
         SubContent = "Bấm Vào Nút Bên Tay Trái Để Đóng Giao Diện",
         Duration = 16
     })
-    _G.SizeDevice = UDim2.fromOffset(535, 444)
+    _G.SizeDevice = UDim2.fromOffset(589, 470)
     closeui()
 else
     Fluent:Notify({
@@ -45,7 +45,7 @@ else
         SubContent = "Bấm Vào Nút Control Bên Phải Để Đóng Giao Diện",
         Duration = 16
     })
-    _G.SizeDevice = UDim2.fromOffset(612, 512)
+    _G.SizeDevice = UDim2.fromOffset(712, 512)
 end
 -- create tab window
 local Window = Fluent:CreateWindow({
@@ -151,7 +151,6 @@ task.spawn(function()
         end
     end
 end)
-
 -- SpawmTab
 local SpawmTab = Tabs.Main:AddSection("Spawm Tab")
 local AutoTPSpawm = SpawmTab:AddToggle("AutoTPSpawm", {
@@ -170,6 +169,28 @@ task.spawn(function()
         end
     end
 end)
+-- pettab
+local PetsTab = Tabs.Main:AddSection("Pets Tab")
+function buypet(name)
+    game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",name)
+end
+local PetDropdown = PetsTab:AddDropdown("PetDropdown", {
+    Title = "Dropdown Pet",
+    Values = {"Red Crystal", "Blue Crystal", "Purple Crystal", "Yellow Crystal", "Lightning Crystal"},
+    Multi = false,
+    Default = 1,
+})
+PetDropdown:SetValue("Red Crystal")
+PetDropdown:OnChanged(function(Value)
+    _G.PetDropdown = Value
+end)
+PetsTab:AddButton({
+    Title = "Open Pet",
+    Description = "Mua Pet Chọn Ở Dropdown",
+    Callback = function()
+        buypet(_G.PetDropdown[1])
+    end
+})
 
 local ServerTab = Tabs.Settings:AddSection("Server")
 ServerTab:AddButton({
