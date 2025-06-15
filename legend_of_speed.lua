@@ -16,7 +16,7 @@ function closeui()
     ImageButton.Draggable = true
     ImageButton.Image = "http://www.roblox.com/asset/?id=79051406542947"
     ImageButton.MouseButton1Down:connect(function()
-        game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.RightAlt,false,game)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.Delete,false,game)
     end)
 end
 -- xác định người chơi
@@ -55,7 +55,7 @@ local Window = Fluent:CreateWindow({
     Size = _G.SizeDevice,
     Acrylic = true,
     Theme = "Darker",
-    MinimizeKey = Enum.KeyCode.End,
+    MinimizeKey = Enum.KeyCode.Delete,
 })
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "home" }),
