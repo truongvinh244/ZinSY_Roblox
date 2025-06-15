@@ -16,7 +16,7 @@ function closeui()
     ImageButton.Draggable = true
     ImageButton.Image = "http://www.roblox.com/asset/?id=79051406542947"
     ImageButton.MouseButton1Down:connect(function()
-        game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.End,false,game)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.RightAlt,false,game)
     end)
 end
 -- xác định người chơi
@@ -170,28 +170,7 @@ task.spawn(function()
     end
 end)
 -- PetsTab
-local PetsTab = Tabs.Main:AddSection("Pets Tab")
-function buypet(name)
-    game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",name)
-end
-local PetDropdown = PetsTab:AddDropdown("PetDropdown", {
-    Title = "Dropdown Pet",
-    Values = {"Red Crystal", "Blue Crystal", "Purple Crystal", "Yellow Crystal", "Lightning Crystal"},
-    Multi = false,
-    Default = 1,
-})
-PetDropdown:SetValue("here")
-PetDropdown:OnChanged(function(Value)
-    _G.PetDropdown = Value
-    print("Selected Pet: " .. Value)
-end)
-PetsTab:AddButton({
-    Title = "Open Pet",
-    Description = "Mua Pet Chọn Ở Dropdown",
-    Callback = function()
-        buypet(_G.PetDropdown[1])
-    end
-})
+
 
 
 -- servertab
