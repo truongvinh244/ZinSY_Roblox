@@ -104,7 +104,7 @@ task.spawn(function()
         end
     end
 end)
--- OrbsTabs
+-- OrbsTab
 local OrbsTab = Tabs.Main:AddSection("Orbs Tab")
 local AutoTPOrbs = OrbsTab:AddToggle("AutoTPOrbs", {
     Title = "Auto TP Orbs",
@@ -169,7 +169,7 @@ task.spawn(function()
         end
     end
 end)
--- pettab
+-- PetsTab
 local PetsTab = Tabs.Main:AddSection("Pets Tab")
 function buypet(name)
     game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",name)
@@ -180,7 +180,7 @@ local PetDropdown = PetsTab:AddDropdown("PetDropdown", {
     Multi = false,
     Default = 1,
 })
-PetDropdown:SetValue("Red Crystal")
+PetDropdown:SetValue("here")
 PetDropdown:OnChanged(function(Value)
     _G.PetDropdown = Value
 end)
@@ -192,6 +192,8 @@ PetsTab:AddButton({
     end
 })
 
+
+-- servertab
 local ServerTab = Tabs.Settings:AddSection("Server")
 ServerTab:AddButton({
     Title = "Rejoin Server",
