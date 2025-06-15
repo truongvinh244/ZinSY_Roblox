@@ -183,6 +183,7 @@ local PetDropdown = PetsTab:AddDropdown("PetDropdown", {
 PetDropdown:SetValue("here")
 PetDropdown:OnChanged(function(Value)
     _G.PetDropdown = Value
+    print("Selected Pet: " .. Value)
 end)
 PetsTab:AddButton({
     Title = "Open Pet",
