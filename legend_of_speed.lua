@@ -12,7 +12,7 @@ function closeui()
     ImageButton.Parent = ScreenGui
     ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton.BorderSizePixel = 0
-    ImageButton.Position = UDim2.new(0.0104, 0, 0.228, 0)
+    ImageButton.Position = UDim2.new(0.0304, 0, 0.328, 0)
     ImageButton.Size = UDim2.new(0, 40, 0, 40)
     ImageButton.Image = "rbxassetid://96036361413632"
     ImageButton.Draggable = true
