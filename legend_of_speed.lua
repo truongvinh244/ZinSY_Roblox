@@ -3,49 +3,35 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 -- close ui
 function closeui()
+    local player = game.Players.LocalPlayer
     local ScreenGui = Instance.new("ScreenGui")
     local ImageButton = Instance.new("ImageButton")
     local UICorner = Instance.new("UICorner")
-    ScreenGui.Parent = game.CoreGui
+    ScreenGui.Parent = player:WaitForChild("PlayerGui")
     ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     ImageButton.Parent = ScreenGui
     ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton.BorderSizePixel = 0
-    ImageButton.Position = UDim2.new(0.012433337, 0, 0.1780590813, 0)
-    ImageButton.Size = UDim2.new(0, 34, 0, 34)
+    ImageButton.Position = UDim2.new(0.0104, 0, 0.198, 0)
+    ImageButton.Size = UDim2.new(0, 40, 0, 40)
+    ImageButton.Image = "rbxassetid://96036361413632"
     ImageButton.Draggable = true
-    ImageButton.Image = "http://www.roblox.com/asset/?id=79051406542947"
-    ImageButton.MouseButton1Down:connect(function()
-        game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.Delete,false,game)
+    ImageButton.Active = true
+    ImageButton.Selectable = true
+    UICorner.Parent = ImageButton
+    ImageButton.MouseButton1Down:Connect(function()
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.Delete, false, game)
     end)
 end
 -- xác định người chơi
-if _G.ModDevice == "Phone" then
-    Fluent:Notify({
-        Title = "ZinSY Hub - Notification",
-        Content = "Chế Độ Điện Thoại",
-        SubContent = "Bấm Vào Nút Bên Tay Trái Để Đóng Giao Diện",
-        Duration = 16 
-    })
-    _G.SizeDevice = UDim2.fromOffset(510, 365)
+if _G.ModDevice == "PC" then
+    _G.SizeDevice = UDim2.fromOffset(712, 512)
     closeui()
 elseif _G.ModDevice == "Tablet" then
-    Fluent:Notify({
-        Title = "ZinSY Hub - Notification",
-        Content = "Chế Độ Máy Tính Bảng",
-        SubContent = "Bấm Vào Nút Bên Tay Trái Để Đóng Giao Diện",
-        Duration = 16
-    })
     _G.SizeDevice = UDim2.fromOffset(589, 470)
     closeui()
 else
-    Fluent:Notify({
-        Title = "ZinSY Hub - Notification",
-        Content = "Chế Độ Máy Tính",
-        SubContent = "Bấm Vào Nút Control Bên Phải Để Đóng Giao Diện",
-        Duration = 16
-    })
-    _G.SizeDevice = UDim2.fromOffset(712, 512)
+    _G.SizeDevice = UDim2.fromOffset(510, 325)
     closeui()
 end
 -- create tab window
@@ -59,18 +45,12 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.Delete,
 })
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Farm = Window:AddTab({ Title = "Farm", Icon = "home" }),
+    Pet = Window:AddTab({ Title = "Pet", Icon = "settings" }),
+    Server = Window:AddTab({ Title = "Server", Icon = "server" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 }
 local FluentOption = Fluent.Options
-Fluent:Notify({
-    Title = "ZinSY Hub - Notification",
-    Content = "Loading Done !",
-    SubContent = "Script Của Bạn Đã Chạy Thành Công",
-    Duration = 12
-})
--- close ui
-
 -- local 
 local hoopsFolder = workspace:WaitForChild("Hoops")
 local cityFolder = workspace:WaitForChild("orbFolder"):WaitForChild("City")
@@ -84,7 +64,7 @@ end)
 
 -- Create Script
 -- HoopsTab
-local HoopsTab = Tabs.Main:AddSection("Hoops Tab")
+local HoopsTab = Tabs.Farm:AddSection("Hoops Tab")
 local AutoTPHoops = HoopsTab:AddToggle("AutoTPHoops", {
     Title = "Auto TP Hoops",
     Description = "TP Tới Vòng Nhảy", 
@@ -106,7 +86,7 @@ task.spawn(function()
     end
 end)
 -- OrbsTab
-local OrbsTab = Tabs.Main:AddSection("Orbs Tab")
+local OrbsTab = Tabs.Farm:AddSection("Orbs Tab")
 local AutoTPOrbs = OrbsTab:AddToggle("AutoTPOrbs", {
     Title = "Auto TP Orbs",
     Description = "TP Tới Quả Cầu Phát Sáng",
@@ -153,7 +133,7 @@ task.spawn(function()
     end
 end)
 -- SpawmTab
-local SpawmTab = Tabs.Main:AddSection("Spawm Tab")
+local SpawmTab = Tabs.Farm:AddSection("Spawm Tab")
 local AutoTPSpawm = SpawmTab:AddToggle("AutoTPSpawm", {
     Title = "Auto TP Spawm",
     Description = "TP Tới Spawm Khi Tắt Orb Và Hoops",
@@ -171,7 +151,7 @@ task.spawn(function()
     end
 end)
 -- PetsTab
-local PetsTab = Tabs.Main:AddSection("Pets Tab")
+local PetsTab = Tabs.Pet:AddSection("Pets Tab")
 function buypet(name)
     game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",name)
 end
@@ -193,7 +173,7 @@ PetsTab:AddButton({
     end
 })
 -- servertab
-local ServerTab = Tabs.Settings:AddSection("Server")
+local ServerTab = Tabs.Server:AddSection("Server")
 ServerTab:AddButton({
     Title = "Rejoin Server",
     Description = "Tham Gia Lại Server",
@@ -201,7 +181,8 @@ ServerTab:AddButton({
         game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
     end
 })
-ServerTab:AddButton({
+local FixLagTab = Tabs.Settings:AddSection("Fix Lag")
+FixLagTab:AddButton({
     Title = "Fix Lag",
     Description = "Giảm Lag",
     Callback = function()
@@ -214,3 +195,11 @@ ServerTab:AddButton({
     end
 })
 
+-- done loading
+wait(4)
+Fluent:Notify({
+    Title = "ZinSY Hub - Notification",
+    Content = "Loading Done !",
+    SubContent = "Script Của Bạn Đã Chạy Thành Công",
+    Duration = 12
+})
