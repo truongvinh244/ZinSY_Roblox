@@ -12,7 +12,7 @@ function closeui()
     ImageButton.Parent = ScreenGui
     ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton.BorderSizePixel = 0
-    ImageButton.Position = UDim2.new(0.0804, 0, 0.928, 0)
+    ImageButton.Position = UDim2.new(0.0304, 0, 0.128, 0)
     ImageButton.Size = UDim2.new(0, 40, 0, 40)
     ImageButton.Image = "rbxassetid://96036361413632"
     ImageButton.Draggable = true
@@ -45,8 +45,8 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.Delete,
 })
 local Tabs = {
-    Farm = Window:AddTab({ Title = "Farm", Icon = "home" }),
-    Pet = Window:AddTab({ Title = "Pet", Icon = "settings" }),
+    Farm = Window:AddTab({ Title = "Farm", Icon = "" }),
+    Pet = Window:AddTab({ Title = "Pet", Icon = "pet" }),
     Server = Window:AddTab({ Title = "Server", Icon = "server" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 }
@@ -196,7 +196,7 @@ FixLagTab:AddButton({
 })
 
 -- done loading
-wait(4)
+wait(12)
 Fluent:Notify({
     Title = "ZinSY Hub - Notification",
     Content = "Loading Done !",
