@@ -48,7 +48,7 @@ FluentOption.AutoBuyEggs:OnChanged(function(Value)
     _G.AutoBuyEggsGf = Value
 end)
 task.spawn(function()
-    while wait(600) do
+    while wait(1) do
         if _G.AutoBuyEggsGf then
             for demEgg = 1,3 do
                 for _, eggModel in ipairs(eggFolder:GetChildren()) do
