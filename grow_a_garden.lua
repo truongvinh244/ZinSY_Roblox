@@ -66,3 +66,12 @@ task.spawn(function()
         end
     end
 end)
+
+local ServerTab = Tabs.Server:AddSection("Server Tab")
+ServerTab:AddButton({
+    Title = "Rejoin Server",
+    Description = "Tham Gia Lại Server",
+    Callback = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+    end
+})
