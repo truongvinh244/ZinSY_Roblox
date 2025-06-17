@@ -52,10 +52,9 @@ task.spawn(function()
         local demPet = 0
         if _G.AutoBuyEggsGf then
             wait(1)
-            for _, eggName in ipairs(_G.Eggs) do
-                wait(1)
                 for _, eggModel in ipairs(eggFolder:GetChildren()) do
                     wait(1)
+                    for _, eggName in ipairs(_G.Eggs) do
                     if eggModel:IsA("Model") then
                         demPet += 1
                         wait(2)
