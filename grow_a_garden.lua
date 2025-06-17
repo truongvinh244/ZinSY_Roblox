@@ -56,8 +56,8 @@ task.spawn(function()
                     if eggModel:IsA("Model") then
                         demPet += 1
                         wait(1)
+                        print(eggName, eggModel.Name, demPet)
                         if eggModel.Name == eggName then
-                            print(eggName, eggModel.Name)
                             local mua = {[1] = demPet}
                             game:GetService("ReplicatedStorage").GameEvents.BuyPetEgg:FireServer(unpack(mua))
                         end
