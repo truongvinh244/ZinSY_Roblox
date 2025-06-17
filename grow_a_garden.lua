@@ -47,7 +47,7 @@ local AutoBuyEggs = PetsTab:AddToggle("AutoBuyEggs", {
 AutoBuyEggs:OnChanged(function(Value)
     _G.AutoBuyEggsGf = Value
 end)
-task.spawm(function()
+task.spawn(function()
     while wait(10) do
         local demPet = 0
         if _G.AutoBuyEggsGf then
