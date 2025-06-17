@@ -66,7 +66,7 @@ task.spawn(function()
                 end
             end
         end
-        wait.task(600)
+        wait(600)
     end
 end)
 
