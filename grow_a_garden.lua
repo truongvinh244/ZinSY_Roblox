@@ -44,7 +44,7 @@ local AutoBuyEggs = PetsTab:AddToggle("AutoBuyEggs", {
     Title = "Auto Buy Eggs",
     Description = "Mua Eggs Tự Động",
     Default = false })
-AutoBuyEggs:OnChanged(function(Value)
+FluentOption.AutoBuyEggs:OnChanged(function(Value)
     _G.AutoBuyEggsGf = Value
 end)
 task.spawn(function()
