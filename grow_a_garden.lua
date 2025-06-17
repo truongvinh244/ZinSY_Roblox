@@ -48,7 +48,7 @@ AutoBuyEggs:OnChanged(function(Value)
     _G.AutoBuyEggsGf = Value
 end)
 task.spawn(function()
-    while wait(600) do
+    while wait(1) do
         local demPet = 0
         if _G.AutoBuyEggsGf then
             for _, eggModel in ipairs(eggFolder:GetChildren()) do
