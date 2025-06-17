@@ -55,8 +55,9 @@ task.spawn(function()
                     for demEgg = 1,3 do
                         for _, eggName in ipairs(_G.Eggs) do
                             wait(0.2)
+                            print(eggName, eggModel.Name, demEgg)
                             if eggModel.Name == eggName then
-                                print(eggName, eggModel.Name, demEgg)
+                                print("Mua", eggName, eggModel.Name, demEgg)
                                 local mua = {[1] = demEgg}
                                 game:GetService("ReplicatedStorage").GameEvents.BuyPetEgg:FireServer(unpack(mua))
                             end
