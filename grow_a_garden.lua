@@ -48,14 +48,17 @@ AutoBuyEggs:OnChanged(function(Value)
     _G.AutoBuyEggsGf = Value
 end)
 task.spawn(function()
-    while wait(10) do
+    while wait(1) do
         local demPet = 0
         if _G.AutoBuyEggsGf then
+            wait(1)
             for _, eggName in ipairs(_G.Eggs) do
+                wait(1)
                 for _, eggModel in ipairs(eggFolder:GetChildren()) do
+                    wait(1)
                     if eggModel:IsA("Model") then
                         demPet += 1
-                        wait(1)
+                        wait(2)
                         if eggModel.Name == eggName then
                             local mua = {[1] = demPet}
                             game:GetService("ReplicatedStorage").GameEvents.BuyPetEgg:FireServer(unpack(mua))
@@ -64,6 +67,7 @@ task.spawn(function()
                 end
             end
         end
+        wait.task(600)
     end
 end)
 
