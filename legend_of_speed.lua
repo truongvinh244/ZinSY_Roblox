@@ -63,13 +63,39 @@ local OrbDropdown = OrbsTab:AddDropdown("OrbDropdown", {
     Multi = true,
     Default = 1,
 })
-OrbDropdown:SetValue("here")
+OrbDropdown:SetValue({ "Blue Orb", "Red Orb" })
 OrbDropdown:OnChanged(function(Value)
     _G.OrbDropdown = Value
     print("Selected Orbs: ", _G.OrbDropdown)
 end)
 
-
+local AutoTPOrbs = OrbsTab:AddToggle("AutoTPOrbs", {
+    Title = "Auto TP Orbs",
+    Description = "TP Tới Quả Cầu Phát Sáng Đã Chọn",
+    Default = false })
+AutoTPOrbs:OnChanged(function(Value)
+    _G.AutoTPOrbsGf = Value
+end)
+FluentOption.AutoTPOrbs:SetValue(false)
+task.spawn(function()
+    while wait(0.2) do
+        if _G.AutoTPOrbsGf then
+            for _, OrbSE in ipairs(_G.OrbDropdown) do
+                for _, OrbTP in ipairs(cityFolder:GetChildren()) do
+                    if OrbTP.Name == OrbSE then
+                        pcall(function()
+                            local pos = OrbTP:GetChildren()[2]
+                            if pos and pos:IsA("BasePart") then
+                                hrp.CFrame = CFrame.new(pos.Position)
+                            end
+                        end)
+                        wait(0.11)
+                    end
+                end
+            end
+        end
+    end
+end)
 
 -- SpawmTab
 local SpawmTab = Tabs.Farm:AddSection("Spawm Tab")
