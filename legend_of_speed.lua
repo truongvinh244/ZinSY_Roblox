@@ -59,11 +59,11 @@ local OrbsTab = Tabs.Farm:AddSection("Orbs Tab")
 
 local OrbDropdown = OrbsTab:AddDropdown("OrbDropdown", {
     Title = "Dropdown Orb",
-    Values = {"All", "Blue Orb", "Orange Orb", "Yellow Orb", "Red Orb", "Gem"},
+    Values = {"Blue Orb", "Orange Orb", "Yellow Orb", "Red Orb", "Gem"},
     Multi = true,
     Default = 1,
 })
-OrbDropdown:SetValue("All")
+OrbDropdown:SetValue("here")
 OrbDropdown:OnChanged(function(Value)
     _G.OrbDropdown = Value
 end)
