@@ -1,39 +1,6 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
--- close ui
-function closeui()
-    local player = game.Players.LocalPlayer
-    local ScreenGui = Instance.new("ScreenGui")
-    local ImageButton = Instance.new("ImageButton")
-    local UICorner = Instance.new("UICorner")
-    ScreenGui.Parent = player:WaitForChild("PlayerGui")
-    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    ImageButton.Parent = ScreenGui
-    ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    ImageButton.BorderSizePixel = 0
-    ImageButton.Position = UDim2.new(0.0304, 0, 0.128, 0)
-    ImageButton.Size = UDim2.new(0, 40, 0, 40)
-    ImageButton.Image = "rbxassetid://96036361413632"
-    ImageButton.Draggable = true
-    ImageButton.Active = true
-    ImageButton.Selectable = true
-    UICorner.Parent = ImageButton
-    ImageButton.MouseButton1Down:Connect(function()
-        game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.Delete, false, game)
-    end)
-end
--- xác định người chơi
-if _G.ModDevice == "PC" then
-    _G.SizeDevice = UDim2.fromOffset(712, 512)
-    closeui()
-elseif _G.ModDevice == "Tablet" then
-    _G.SizeDevice = UDim2.fromOffset(589, 470)
-    closeui()
-else
-    _G.SizeDevice = UDim2.fromOffset(510, 325)
-    closeui()
-end
 -- create tab window
 local Window = Fluent:CreateWindow({
     Title = "ZinSY Hub - Speed",
@@ -45,9 +12,11 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.Delete,
 })
 local Tabs = {
-    Farm = Window:AddTab({ Title = "Farm", Icon = "" }),
-    Pet = Window:AddTab({ Title = "Pet", Icon = "pet" }),
+    Farm = Window:AddTab({ Title = "Farm", Icon = "home" }),
+    Pet = Window:AddTab({ Title = "Pet", Icon = "dog" }),
+    Event = Window:AddTab({ Title = "Event", Icon = "noel" }),
     Server = Window:AddTab({ Title = "Server", Icon = "server" }),
+    Quest = Window:AddTab({ Title = "Quest", Icon = "cherry"}),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 }
 local FluentOption = Fluent.Options
@@ -195,11 +164,16 @@ FixLagTab:AddButton({
     end
 })
 
+
+-- nhiệm vụ
+local QuestTab = Tabs.Quest:AddSection("Event")
+
+
 -- done loading
 wait(12)
 Fluent:Notify({
     Title = "ZinSY Hub - Notification",
     Content = "Loading Done !",
-    SubContent = "Script Của Bạn Đã Chạy Thành Công",
+    SubContent = "Có Thể Nhấn Nút Delete Để Ẩn Hoặc Hiện Giao Diện",
     Duration = 12
 })
