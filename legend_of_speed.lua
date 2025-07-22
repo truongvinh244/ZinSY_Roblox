@@ -13,7 +13,7 @@ local Window = Fluent:CreateWindow({
 })
 local Tabs = {
     Farm = Window:AddTab({ Title = "Farm", Icon = "home" }),
-    Pet = Window:AddTab({ Title = "Pet", Icon = "aminal" }),
+    Pet = Window:AddTab({ Title = "Pet", Icon = "animal" }),
     Event = Window:AddTab({ Title = "Event", Icon = "box" }),
     Server = Window:AddTab({ Title = "Server", Icon = "server" }),
     Quest = Window:AddTab({ Title = "Quest", Icon = "cherry"}),
@@ -56,9 +56,21 @@ task.spawn(function()
 end)
 -- OrbsTab
 local OrbsTab = Tabs.Farm:AddSection("Orbs Tab")
+
+local OrbDropdown = OrbsTab:AddDropdown("PetDropdown", {
+    Title = "Dropdown Orb",
+    Values = {"All", "Blue Orb", "Orange Orb", "Yellow Orb", "Red Orb", "Gem"},
+    Multi = true,
+    Default = 1,
+})
+OrbDropdown:SetValue("All")
+OrbDropdown:OnChanged(function(Value)
+    _G.OrbDropdown = Value
+end)
+
 local AutoTPOrbs = OrbsTab:AddToggle("AutoTPOrbs", {
     Title = "Auto TP Orbs",
-    Description = "TP Tới Quả Cầu Phát Sáng",
+    Description = "TP Tới Quả Cầu Phát Sáng Đã Chọn",
     Default = false })
 AutoTPOrbs:OnChanged(function(Value)
     _G.AutoTPOrbsGf = Value
@@ -67,40 +79,32 @@ FluentOption.AutoTPOrbs:SetValue(false)
 task.spawn(function()
     while wait(0.2) do
         if _G.AutoTPOrbsGf then
-            for orbx, orb1 in ipairs(cityFolder:GetChildren()) do
-                pcall(function()
-                    hrp.CFrame = CFrame.new(orb1:GetChildren()[2].Position)
-                end)
-                wait(0.1)
-            end
-        end
-    end
-end)
-local AutoTPGems = OrbsTab:AddToggle("AutoTPGems", {
-    Title = "Auto TP Gems",
-    Description = "TP Tới Kim Cương",
-    Default = false })
-AutoTPGems:OnChanged(function(Value)
-    _G.AutoTPGemsGf = Value
-end)
-FluentOption.AutoTPGems:SetValue(false)
-task.spawn(function()
-    while wait(0.2) do
-        if _G.AutoTPGemsGf then
-            for gemx, gem1 in ipairs(cityFolder:GetChildren()) do
-                if gem1.Name == "Gem" then
+            if _G.OrbDropdown[1] == "All" then
+                for _, orb1 in ipairs(cityFolder:GetChildren()) do
                     pcall(function()
-                        local pos = gem1:GetChildren()[2]
-                        if pos and pos:IsA("BasePart") then
-                            hrp.CFrame = CFrame.new(pos.Position)
-                        end
+                        hrp.CFrame = CFrame.new(orb1:GetChildren()[2].Position)
                     end)
-                    wait(0.11)
+                    wait(0.1)
+                end
+            else
+                for _, OrbSE in ipairs(_G.OrbDropdown) do
+                    for _, OrbTP in ipairs(cityFolder:GetChildren()) do
+                        if OrbTP.Name == OrbSE then
+                            pcall(function()
+                                local pos = OrbTP:GetChildren()[2]
+                                if pos and pos:IsA("BasePart") then
+                                    hrp.CFrame = CFrame.new(pos.Position)
+                                end
+                            end)
+                            wait(0.11)
+                        end
+                    end
                 end
             end
         end
     end
 end)
+
 -- SpawmTab
 local SpawmTab = Tabs.Farm:AddSection("Spawm Tab")
 local AutoTPSpawm = SpawmTab:AddToggle("AutoTPSpawm", {
