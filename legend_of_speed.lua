@@ -79,25 +79,16 @@ FluentOption.AutoTPOrbs:SetValue(false)
 task.spawn(function()
     while wait(0.2) do
         if _G.AutoTPOrbsGf then
-            if _G.OrbDropdown[1] == "All" then
-                for _, orb1 in ipairs(cityFolder:GetChildren()) do
-                    pcall(function()
-                        hrp.CFrame = CFrame.new(orb1:GetChildren()[2].Position)
-                    end)
-                    wait(0.1)
-                end
-            else
-                for _, OrbSE in ipairs(_G.OrbDropdown) do
-                    for _, OrbTP in ipairs(cityFolder:GetChildren()) do
-                        if OrbTP.Name == OrbSE then
-                            pcall(function()
-                                local pos = OrbTP:GetChildren()[2]
-                                if pos and pos:IsA("BasePart") then
-                                    hrp.CFrame = CFrame.new(pos.Position)
-                                end
-                            end)
-                            wait(0.11)
-                        end
+            for _, OrbSE in ipairs(_G.OrbDropdown) do
+                for _, OrbTP in ipairs(cityFolder:GetChildren()) do
+                    if OrbTP.Name == OrbSE then
+                        pcall(function()
+                            local pos = OrbTP:GetChildren()[2]
+                            if pos and pos:IsA("BasePart") then
+                                hrp.CFrame = CFrame.new(pos.Position)
+                            end
+                        end)
+                        wait(0.11)
                     end
                 end
             end
