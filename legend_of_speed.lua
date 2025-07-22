@@ -57,7 +57,7 @@ end)
 -- OrbsTab
 local OrbsTab = Tabs.Farm:AddSection("Orbs Tab")
 
-local OrbDropdown = OrbsTab:AddDropdown("PetDropdown", {
+local OrbDropdown = OrbsTab:AddDropdown("OrbDropdown", {
     Title = "Dropdown Orb",
     Values = {"All", "Blue Orb", "Orange Orb", "Yellow Orb", "Red Orb", "Gem"},
     Multi = true,
