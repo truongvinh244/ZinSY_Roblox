@@ -13,8 +13,8 @@ local Window = Fluent:CreateWindow({
 })
 local Tabs = {
     Farm = Window:AddTab({ Title = "Farm", Icon = "home" }),
-    Pet = Window:AddTab({ Title = "Pet", Icon = "dog" }),
-    Event = Window:AddTab({ Title = "Event", Icon = "noel" }),
+    Pet = Window:AddTab({ Title = "Pet", Icon = "AnimalCatRegular" }),
+    Event = Window:AddTab({ Title = "Event", Icon = "box" }),
     Server = Window:AddTab({ Title = "Server", Icon = "server" }),
     Quest = Window:AddTab({ Title = "Quest", Icon = "cherry"}),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
