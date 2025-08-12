@@ -43,47 +43,6 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
 	wait(10)
 	game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
--- Local
-local TweenService = game:GetService("TweenService")
-local Players = game:GetService("Players")
-local currentTween
-local RunService = game:GetService("RunService")
-local player = game.Players.LocalPlayer
-local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
--- Function
-function Tween(DiaDiem)
-    if hrp then
-        local targetPos = DiaDiem
-        local baseSpeed = _G.TweenSpeedGG
-        local slowDistance = 244
-        local minSpeed = 144
-        local function getSpeedByDistance(dist)
-            if dist <= slowDistance then
-                return minSpeed
-            else
-                return baseSpeed
-            end
-        end
-        local conn
-        conn = RunService.Heartbeat:Connect(function()
-            local dist = (hrp.Position - targetPos).Magnitude
-            local currentSpeed = getSpeedByDistance(dist)
-            local moveDir = (targetPos - hrp.Position).Unit
-            hrp.CFrame = hrp.CFrame + moveDir * (currentSpeed * RunService.Heartbeat:Wait()) 
-            if dist <= 5 then
-                hrp.CFrame = CFrame.new(targetPos)
-                conn:Disconnect()
-            end
-        end)
-    end
-end
-local function StopFlying()
-    if currentTween then
-        currentTween:Cancel()
-        currentTween = nil
-    end
-end
--- Notifiy
 function noti(tieude,phude,thoigian)
     Fluent:Notify({
         Title = "ZinSY Script",
@@ -92,52 +51,84 @@ function noti(tieude,phude,thoigian)
         Duration = thoigian 
     })
 end
-
-MainFarm = Tabs.Main:AddSection({Title = "Main Settings"})
-
-island = {
+-- tesst
+local island = {
     ["Jungle"] = Vector3.new(-1447.01001, 61.7109985, 14.45300293),
     ["Sky Island"] = Vector3.new(-4913.06689, 739.033997, -2580.4231),
-    ["Sky Island 1"] = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory"),
-    ["Sky Island 2"] = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetLastSpawnPoint","Sky2"),
     ["Colosseum"] = Vector3.new(-1477.78198, 8.69700623, -2920.66309),
     ["Forzen Village"] = Vector3.new(1398.23303, 84.6360016, -1345.39697),
-    ["Underwater City IN"] = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.852, 11.68, 1819.784)),
-    ["Underwater City OUT"] = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(3864.688, 6.737, -1926.214)),
+    ["Underwater City IN"] = "UnderwaterIn",
+    ["Underwater City OUT"] = "UnderwaterOut",
 }
-
+local MainFarm = Tabs.Main:AddSection("Main Farm")
 local IslandList = MainFarm:AddDropdown("IslandList", {
     Title = "Island TP",
-    Values = {"Jungle", "Sky Island", "Colosseum", "Forzen Village", "Underwater City IN", "Underwater City OUT"},
+    Values = {},
     Multi = false,
     Default = 1,
 })
+for name,_ in pairs(island) do
+    table.insert(IslandList.Values, name)
+end
 IslandList:SetValue("nil")
 IslandList:OnChanged(function(Value)
     _G.Island = Value
 end)
 
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local player = game.Players.LocalPlayer
+local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+local currentTween
 
-TweenIsland = MainFarm:AddToggle("TweenIsland", {Title = "TweenIsland", Default = false })
-TweenIsland:OnChanged(function()
-    _G.TweenIslandGG = Options.MyToggle.Value
-end)
-Options.MyToggle:SetValue(false)
-task.spawn(function()
-    if _G.TweenIslandGG then
-        if _G.Island == "UnderWater City IN" then
-            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(3864.688, 6.737, -1926.214))
-        elseif _G.Island == "UnderWater City OUT" then
-            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(3864.688, 6.737, -1926.214))
+function Tween(targetPos)
+    if not hrp then return end
+    local baseSpeed = _G.TweenSpeedGG or 300
+    local slowDistance = 244
+    local minSpeed = 144
+
+    local function getSpeedByDistance(dist)
+        return dist <= slowDistance and minSpeed or baseSpeed
+    end
+
+    local conn
+    conn = RunService.Heartbeat:Connect(function()
+        local dist = (hrp.Position - targetPos).Magnitude
+        local currentSpeed = getSpeedByDistance(dist)
+        local moveDir = (targetPos - hrp.Position).Unit
+        hrp.CFrame = hrp.CFrame + moveDir * (currentSpeed * RunService.Heartbeat:Wait())
+        if dist <= 5 then
+            hrp.CFrame = CFrame.new(targetPos)
+            conn:Disconnect()
+            noti("Hoàn tất", "Đã đến nơi: " .. _G.Island, 3)
+        end
+    end)
+end
+
+function StopFlying()
+    if currentTween then
+        currentTween:Cancel()
+        currentTween = nil
+    end
+end
+local TweenIsland = MainFarm:AddToggle("TweenIsland", {Title = "TweenIsland", Default = false })
+TweenIsland:OnChanged(function(Value)
+    _G.TweenIslandGG = Value
+    if Value then
+        if _G.Island == "Underwater City IN" then
+            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(3864.688, 6.737, -1926.214))
+        elseif _G.Island == "Underwater City OUT" then
+            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(3864.688, 6.737, -1926.214))
+        elseif island[_G.Island] then
+            Tween(island[_G.Island])
         else
-            Tween(island(_G.Island))
+            noti("Lỗi", "Không tìm thấy đảo: " .. tostring(_G.Island), 3)
         end
     else
         StopFlying()
     end
 end)
-
-MainSettings = Tabs.Settings:AddSection({Title = "Main Settings",})
+local MainSettings = Tabs.Settings:AddSection("Main Settings")
 local TweenSpeed = MainSettings:AddSlider("TweenSpeed", {
     Title = "TweenSpeed",
     Description = "Chọn Tốc Độ Bay",
